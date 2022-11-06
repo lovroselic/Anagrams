@@ -43,5 +43,6 @@
     <Text Include="words.txt" />
     <Text Include="Test.txt" />
     <Text Include="words2.txt" />
+    <Text Include="Try.txt" />
   </ItemGroup>
 </Project>

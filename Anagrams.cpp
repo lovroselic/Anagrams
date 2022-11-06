@@ -5,36 +5,47 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include<map>
+#include <map>
+#include <chrono>
 
 #include "Console.h"
 #include "CodeAbbey.h"
 #include "LS_library.h"
-#define VERSION "0.1"
+#define VERSION "1.0"
 
 using namespace std;
 
-string Compact(string str);
-string Pack(vector<string>& cell);
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
+
 map<string, int> MapDict(vector<string>& dictData);
-void printMap(map<string, int> map);
 
 int main() {
+	auto t1 = high_resolution_clock::now();
 	cout << "Anagrams v" << VERSION << "!\n\n";
-	string dict_path = "words2.txt";
-	string path = "Test.txt";
-	//string path = "Try.txt";
+	string dict_path = "words.txt";
+	//string path = "Test.txt";
+	string path = "Try.txt";
 	vector<string> dict = loadData(dict_path);
 	vector<string> raw_data = loadData(path);
 	//printVector(dict);
 	map <string, int> DICT = MapDict(dict);
-	printMap(DICT);
+	//printMap(DICT);
 
-
+	vector<int> solution;
 	for (int i = 1; i < raw_data.size(); i++) {
 		string C = Compact(raw_data[i]);
-		//cout << raw_data[i] << " : " << C << endl;
+		cout << raw_data[i] << " : " << DICT[C]-1 << endl;
+		solution.push_back(DICT[C] - 1);
 	}
+	cout << "Solution: " << joinVector(solution, " ") << endl;;
+
+	/***********************/
+	auto t2 = high_resolution_clock::now();
+	auto ms_int = duration_cast<milliseconds>(t2 - t1);
+	cout << "Execution time: " << ms_int.count() << " ms" << endl;
 }
 
 map<string, int> MapDict(vector<string>& dictData) {
@@ -49,41 +60,4 @@ map<string, int> MapDict(vector<string>& dictData) {
 		}
 	}
 	return dict;
-}
-
-void printMap(map<string, int> map) {
-	for (const auto& el : map) {
-		cout << el.first << "\t-> " << el.second << endl;
-	}
-};
-
-
-string Compact(string str) {
-	vector<string> S = splitString(str);
-	sort(S.begin(), S.end());
-	string packed = Pack(S);
-	return packed;
-}
-
-string Pack(vector<string>& cell) {
-	string compacted = "";
-	string pchar = "";
-	int count = 0;
-	for (auto& c : cell) {
-		if (c == pchar) {
-			count++;
-		}
-		else {
-			if (count > 0) {
-				compacted += to_string(count);
-				compacted += pchar;
-			}
-			pchar = c;
-			count = 1;
-		}
-	}
-	compacted += to_string(count);
-	compacted += pchar;
-
-	return compacted;
 }

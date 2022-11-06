@@ -10,5 +10,6 @@ void print2DVector(std::vector<std::vector<std::string>>& vct);
 void print2DVector(std::vector<std::vector<char>>& vct);
 void print2DVector(std::vector<std::vector<bool>>& vct);
 void print3DVector(std::vector<std::vector<std::vector<std::string>>>& vct);
+void printMap(std::map<std::string, int> map);
 
 #endif // !CONSOLE

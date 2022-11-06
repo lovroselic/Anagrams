@@ -1,9 +1,10 @@
 /*
-	v 0.4
+	v 0.5
 */
 #include <iostream>
 #include <vector>
 #include <string>
+#include <map>
 #include "Console.h"
 
 void printArray(int* data, int length) {
@@ -81,3 +82,8 @@ void print3DVector(std::vector<std::vector<std::vector<std::string>>>& vct) {
 	std::cout << std::endl;
 	return;
 }
+void printMap(std::map<std::string, int> map) {
+	for (const auto& el : map) {
+		std::cout << el.first << "\t-> " << el.second << std::endl;
+	}
+};

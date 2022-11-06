@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include "CodeAbbey.h"
 
 std::vector<std::string> loadData(std::string name) {
@@ -105,4 +106,34 @@ std::vector<int> splitToInt(std::string str, const std::string separator) {
 	std::vector<std::string> data = splitString(str, separator);
 	std::vector<int> intData = stringVectorToInt(data);
 	return intData;
+}
+
+std::string Compact(std::string str) {
+	std::vector<std::string> S = splitString(str);
+	std::sort(S.begin(), S.end());
+	std::string packed = Pack(S);
+	return packed;
+}
+
+std::string Pack(std::vector<std::string>& cell) {
+	std::string compacted = "";
+	std::string pchar = "";
+	int count = 0;
+	for (auto& c : cell) {
+		if (c == pchar) {
+			count++;
+		}
+		else {
+			if (count > 0) {
+				compacted += std::to_string(count);
+				compacted += pchar;
+			}
+			pchar = c;
+			count = 1;
+		}
+	}
+	compacted += std::to_string(count);
+	compacted += pchar;
+
+	return compacted;
 }
